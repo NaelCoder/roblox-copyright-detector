@@ -25,113 +25,74 @@ export default function App() {
       setIsScanning(false)
 
       const fakeResults = [
-  {
-    similarity: "96%",
-    risk: "High Risk",
-    color: "text-red-400",
-    bg: "bg-red-500/10 border-red-500/30",
+        {
+          similarity: "96%",
+          risk: "High Risk",
+          color: "text-red-400",
+          bg: "bg-red-500/10 border-red-500/30",
 
-    matches: [
-      {
-        song: "Night Drive Remix",
-        owner: "Aether Studio",
-      },
-      {
-        song: "Cyber Pulse",
-        owner: "Nova Music",
-      },
-    ],
+          matches: [
+            {
+              song: "Night Drive Remix",
+              owner: "Aether Studio",
+            },
+            {
+              song: "Cyber Pulse",
+              owner: "Nova Music",
+            },
+          ],
 
-    issues: [
-      "Melody similarity detected at 0:23–0:41",
-      "Bass pattern resembles copyrighted track",
-      "Repeated synth sequence detected",
-    ],
+          issues: [
+            "Melody similarity detected at 0:23–0:41",
+            "Bass pattern resembles copyrighted track",
+            "Repeated synth sequence detected",
+          ],
 
-    suggestions: [
-      "Replace synth melody layer",
-      "Add unique percussion pattern",
-      "Lower melody pitch by 2 semitones",
-    ],
-  },
+          suggestions: [
+            "Replace synth melody layer",
+            "Add unique percussion pattern",
+            "Lower melody pitch by 2 semitones",
+          ],
+        },
 
-  {
-    similarity: "72%",
-    risk: "Medium Risk",
-    color: "text-yellow-400",
-    bg: "bg-yellow-500/10 border-yellow-500/30",
+        {
+          similarity: "72%",
+          risk: "Medium Risk",
+          color: "text-yellow-400",
+          bg: "bg-yellow-500/10 border-yellow-500/30",
 
-    matches: [
-      {
-        song: "Dreamwave Loop",
-        owner: "Pixel Beats",
-      },
-    ],
+          matches: [
+            {
+              song: "Dreamwave Loop",
+              owner: "Pixel Beats",
+            },
+          ],
 
-    issues: [
-      "Partial melody overlap detected",
-    ],
+          issues: [
+            "Partial melody overlap detected",
+          ],
 
-    suggestions: [
-      "Modify lead instrument",
-      "Add custom drum variation",
-    ],
-  },
+          suggestions: [
+            "Modify lead instrument",
+            "Add custom drum variation",
+          ],
+        },
 
-  {
-    similarity: "12%",
-    risk: "Safe",
-    color: "text-green-400",
-    bg: "bg-green-500/10 border-green-500/30",
+        {
+          similarity: "12%",
+          risk: "Safe",
+          color: "text-green-400",
+          bg: "bg-green-500/10 border-green-500/30",
 
-    matches: [],
+          matches: [],
 
-    issues: [],
+          issues: [],
 
-    suggestions: [
-      "Audio appears safe for upload",
-    ],
-  },
-]
-<div className="mt-6 bg-zinc-900 p-4 rounded-xl">
-  <p className="text-zinc-500 text-sm mb-3">
-    AI Detected Issues
-  </p>
-
-  {scanResult.issues.length > 0 ? (
-    <ul className="space-y-2">
-      {scanResult.issues.map((issue, index) => (
-        <li
-          key={index}
-          className="bg-zinc-800 p-3 rounded-xl text-zinc-300"
-        >
-          {issue}
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="text-green-400">
-      No major copyright issues detected.
-    </p>
-  )}
-</div>
-
-<div className="mt-6 bg-zinc-900 p-4 rounded-xl">
-  <p className="text-zinc-500 text-sm mb-3">
-    AI Suggestions
-  </p>
-
-  <ul className="space-y-2">
-    {scanResult.suggestions.map((suggestion, index) => (
-      <li
-        key={index}
-        className="bg-zinc-800 p-3 rounded-xl text-cyan-300"
-      >
-        {suggestion}
-      </li>
-    ))}
-  </ul>
-</div>
+          suggestions: [
+            "Audio appears safe for upload",
+          ],
+        },
+      ]
 
       const random =
         fakeResults[Math.floor(Math.random() * fakeResults.length)]
@@ -259,6 +220,46 @@ export default function App() {
                 Sistem mendeteksi adanya kemiripan audio fingerprint dengan database music reference.
                 Disarankan untuk melakukan pengecekan lisensi sebelum upload ke Roblox Creation Hub.
               </p>
+            </div>
+
+            <div className="mt-6 bg-zinc-900 p-4 rounded-xl">
+              <p className="text-zinc-500 text-sm mb-3">
+                AI Detected Issues
+              </p>
+
+              {scanResult.issues.length > 0 ? (
+                <ul className="space-y-2">
+                  {scanResult.issues.map((issue, index) => (
+                    <li
+                      key={index}
+                      className="bg-zinc-800 p-3 rounded-xl text-zinc-300"
+                    >
+                      {issue}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-green-400">
+                  No major copyright issues detected.
+                </p>
+              )}
+            </div>
+
+            <div className="mt-6 bg-zinc-900 p-4 rounded-xl">
+              <p className="text-zinc-500 text-sm mb-3">
+                AI Suggestions
+              </p>
+
+              <ul className="space-y-2">
+                {scanResult.suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    className="bg-zinc-800 p-3 rounded-xl text-cyan-300"
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
             </div>
 
           </div>
