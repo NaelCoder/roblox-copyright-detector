@@ -2,6 +2,7 @@ import { useState } from "react"
 
 export default function App() {
   const [fileName, setFileName] = useState("")
+  const [audioUrl, setAudioUrl] = useState("")
   const [isScanning, setIsScanning] = useState(false)
   const [scanResult, setScanResult] = useState(null)
 
@@ -10,6 +11,7 @@ export default function App() {
 
     if (file) {
       setFileName(file.name)
+      setAudioUrl(URL.createObjectURL(file))
       setScanResult(null)
     }
   }
@@ -95,6 +97,14 @@ export default function App() {
               {fileName}
             </p>
           </div>
+        )}
+
+        {audioUrl && (
+          <audio
+            controls
+            className="w-full mt-6"
+            src={audioUrl}
+          />
         )}
 
         <button
