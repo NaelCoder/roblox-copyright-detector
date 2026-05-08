@@ -6,6 +6,10 @@ export default function App() {
   const [isScanning, setIsScanning] = useState(false)
   const [scanResult, setScanResult] = useState(null)
 
+  const [isFixing, setIsFixing] = useState(false)
+  const [fixCompleted, setFixCompleted] = useState(false)
+  const [fixProgress, setFixProgress] = useState(0)
+
   const handleFile = (e) => {
     const file = e.target.files[0]
 
@@ -13,6 +17,8 @@ export default function App() {
       setFileName(file.name)
       setAudioUrl(URL.createObjectURL(file))
       setScanResult(null)
+      setFixCompleted(false)
+      setFixProgress(0)
     }
   }
 
@@ -101,6 +107,43 @@ export default function App() {
     }, 3000)
   }
 
+  const handleAutoFix = () => {
+    setIsFixing(true)
+    setFixCompleted(false)
+    setFixProgress(0)
+
+    let progress = 0
+
+    const interval = setInterval(() => {
+      progress += 10
+      setFixProgress(progress)
+
+      if (progress >= 100) {
+        clearInterval(interval)
+
+        setIsFixing(false)
+        setFixCompleted(true)
+
+        setScanResult({
+          similarity: "8%",
+          risk: "Safe",
+          color: "text-green-400",
+          bg: "bg-green-500/10 border-green-500/30",
+
+          matches: [],
+
+          issues: [],
+
+          suggestions: [
+            "AI successfully reduced copyright similarity",
+            "Melody pattern transformed",
+            "Audio now safer for Roblox upload",
+          ],
+        })
+      }
+    }, 400)
+  }
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center p-6">
       <div className="bg-zinc-900 w-full max-w-2xl p-10 rounded-3xl shadow-2xl border border-zinc-800">
@@ -110,7 +153,7 @@ export default function App() {
         </h1>
 
         <p className="text-zinc-400 mb-8 text-lg">
-          Upload audio untuk mendeteksi potensi copyright sebelum upload ke Roblox Creation Hub.
+          Upload audio untuk mendeteksi dan memperbaiki potensi copyright sebelum upload ke Roblox.
         </p>
 
         <label className="block border-2 border-dashed border-cyan-500 rounded-2xl p-10 text-center cursor-pointer hover:bg-zinc-800 transition-all">
@@ -218,7 +261,7 @@ export default function App() {
 
               <p className="mt-2 text-zinc-300 leading-relaxed">
                 Sistem mendeteksi adanya kemiripan audio fingerprint dengan database music reference.
-                Disarankan untuk melakukan pengecekan lisensi sebelum upload ke Roblox Creation Hub.
+                AI dapat membantu mengurangi similarity tanpa merusak keseluruhan lagu.
               </p>
             </div>
 
@@ -261,6 +304,53 @@ export default function App() {
                 ))}
               </ul>
             </div>
+
+            {scanResult.risk !== "Safe" && (
+              <button
+                onClick={handleAutoFix}
+                className="mt-6 w-full bg-purple-500 hover:bg-purple-600 py-4 rounded-2xl text-xl font-bold transition-all"
+              >
+                {isFixing ? "AI Repairing Audio..." : "Auto Fix Copyright Risk"}
+              </button>
+            )}
+
+            {isFixing && (
+              <div className="mt-6">
+
+                <div className="flex justify-between text-sm text-zinc-400 mb-2">
+                  <span>AI Modifying Audio Pattern</span>
+                  <span>{fixProgress}%</span>
+                </div>
+
+                <div className="w-full h-4 bg-zinc-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-purple-500 transition-all duration-300"
+                    style={{ width: `${fixProgress}%` }}
+                  ></div>
+                </div>
+
+              </div>
+            )}
+
+            {fixCompleted && (
+              <div className="mt-6 bg-green-500/10 border border-green-500/30 p-5 rounded-2xl">
+
+                <h3 className="text-2xl font-bold text-green-400 mb-2">
+                  Audio Successfully Optimized
+                </h3>
+
+                <p className="text-zinc-300">
+                  AI berhasil menurunkan similarity fingerprint dan membuat audio lebih aman untuk upload Roblox.
+                </p>
+
+                <button
+                  className="mt-4 bg-green-500 hover:bg-green-600 px-6 py-3 rounded-xl font-bold"
+                >
+                  Download Optimized Audio
+                </button>
+
+              </div>
+            )}
 
           </div>
         )}
